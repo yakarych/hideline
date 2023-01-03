@@ -1,1 +1,3 @@
-some_text = "Some button =)"
+access_keys = "My keys 💾"
+subscription = "Subscription 🪙"
+support = "Get Support 💌"

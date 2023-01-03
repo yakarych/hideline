@@ -14,11 +14,14 @@ class ResizedReplyKeyboard(ReplyKeyboardMarkup):
         self.resize_keyboard = True
 
 
-# Customize your keyboard here
 default_menu = ResizedReplyKeyboard(
     keyboard=[
         [
-            KeyboardButton(reply.some_text)
+            KeyboardButton(reply.access_keys),
+            KeyboardButton(reply.subscription)
         ],
+        [
+            KeyboardButton(reply.support),
+        ]
     ]
 )
