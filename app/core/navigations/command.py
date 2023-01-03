@@ -40,6 +40,9 @@ class Commands(BaseCommandList):
     """
 
     start = Command(name='start', description='Start Bot')
+    access_keys = Command(name='keys', description="Manage my keys")
+    subscription = Command(name='sub', description="Manage my subscription")
+    support = Command(name='support', description="Connect with support")
 
 
 async def set_bot_commands(bot: Bot) -> None:
