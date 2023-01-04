@@ -11,9 +11,10 @@ from app.core.navigations.command import Commands
 from app.models.dto import get_user_from_message
 from app.services.api import connector
 from app.services.database.dao.user import UserDAO
+from app.services.payments.billing import get_payment_url
+from app.services.payments.types import Cost
 
 
-@throttle(limit=2)
 async def cmd_start(m: types.Message, state: FSMContext):
     """/start command handling. Adds new user to database, finish states"""
 
@@ -27,6 +28,7 @@ async def cmd_start(m: types.Message, state: FSMContext):
     await m.answer_chat_action(ChatActions.TYPING)
     await asyncio.sleep(1)
     await m.answer(msgs.instruction, reply_markup=reply.default_menu)
+    await m.answer(get_payment_url(user_id=m.from_user.id, cost=Cost.ONE_KEY_COST))
 
 
 @throttle(limit=3)

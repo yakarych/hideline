@@ -29,7 +29,8 @@ class PaymentsChecker:
                 new_payment = self._get_new_payment(user_id=user.id, payments_history=payments_history, user=user)
                 if new_payment:
                     await dao.increment_payments_count(user_id=user.id)
-                    # TODO: Create and send keys.
+                    print(new_payment)
+                    print(user)
 
     def _get_new_payment(self, user_id: int, payments_history: OperationHistory, user: User) -> Optional[Operation]:
         payments_history.operations = self._get_personal_operations(
