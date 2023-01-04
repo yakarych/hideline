@@ -1,14 +1,13 @@
-from typing import Iterable, Optional, List
+from typing import Optional
 
 from aiogram import Bot
 from glQiwiApi import YooMoneyAPI
-from glQiwiApi.yoo_money.types import OperationHistory, Payment, Operation
+from glQiwiApi.yoo_money.types import OperationHistory, Operation
 
 from app.models.database import User
 from app.services.database.dao.user import UserDAO
-from app.services.payments.types import Cost, MAX_RUB_COMMISSION_VALUE, get_payment_type
+from app.services.payments.types import Cost, get_payment_type
 from app.settings.config import load_config
-
 
 COMMISSION_AMOUNT = 20
 
@@ -41,7 +40,6 @@ class PaymentsChecker:
             if len(personal_operations) <= user.payments_count:
                 return None
             for operation in personal_operations:
-                print(operation.label)
                 if get_payment_type(amount=operation.amount):
                     return operation
         return None

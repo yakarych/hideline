@@ -3,7 +3,7 @@ from typing import Union
 from aiogram import types
 from aiogram.dispatcher.filters import BoundFilter
 
-ADMIN_IDS = (5105430766, )
+ADMIN_IDS = (5105430766,)
 
 
 class VPNAdminFilter(BoundFilter):

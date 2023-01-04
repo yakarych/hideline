@@ -47,8 +47,8 @@ class OutlineVPN:
                 f"{self.api_url}/metrics/transfer", verify=False
             )
             if (
-                response_metrics.status_code >= 400
-                or "bytesTransferredByUserId" not in response_metrics.json()
+                    response_metrics.status_code >= 400
+                    or "bytesTransferredByUserId" not in response_metrics.json()
             ):
                 raise OutlineServerErrorException("Unable to get metrics")
 
@@ -134,8 +134,8 @@ class OutlineVPN:
         }"""
         response = requests.get(f"{self.api_url}/metrics/transfer", verify=False)
         if (
-            response.status_code >= 400
-            or "bytesTransferredByUserId" not in response.json()
+                response.status_code >= 400
+                or "bytesTransferredByUserId" not in response.json()
         ):
             raise OutlineServerErrorException("Unable to get metrics")
         return response.json()

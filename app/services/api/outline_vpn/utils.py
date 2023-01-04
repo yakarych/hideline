@@ -1,6 +1,6 @@
-import ssl
-import socket
 import hashlib
+import socket
+import ssl
 from urllib.parse import urlparse
 
 

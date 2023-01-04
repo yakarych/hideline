@@ -7,7 +7,6 @@ import tzlocal
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.interval import IntervalTrigger
 
 from app.core import middlewares
 from app.core.filters.vpn_admin import VPNAdminFilter
@@ -17,9 +16,7 @@ from app.core.navigations.command import set_bot_commands
 from app.core.updates import worker
 from app.services.database.connector import setup_get_pool
 from app.services.notifications import scheduler
-from app.services.payments.billing import PaymentsChecker
 from app.settings.config import Config, load_config
-from app.settings.paths import ROOT_DIR
 
 
 def _init_scheduler() -> AsyncIOScheduler:
@@ -51,7 +48,8 @@ async def main() -> None:
     # Middlewares setup. Register middlewares provided to __init__.py in middlewares package.
     middlewares.setup(dispatcher=dp)
 
-    dp.filters_factory.bind(VPNAdminFilter, exclude_event_handlers=[dp.channel_post_handlers, dp.edited_channel_post_handlers],)
+    dp.filters_factory.bind(VPNAdminFilter,
+                            exclude_event_handlers=[dp.channel_post_handlers, dp.edited_channel_post_handlers], )
 
     scheduler.setup_cron_jobs(scheduler=_init_scheduler(), bot=bot, config=config)
 
