@@ -14,6 +14,8 @@ tzlocal = "^4.2"
 pydantic = "^1.9.1"
 greenlet = "*"
 requests = "*"
+glQiwiApi = "^2.18.3"
+apscheduler = "^3.9.1"
 
 
 [tool.poetry.dev-dependencies]

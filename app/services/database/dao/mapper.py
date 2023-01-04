@@ -12,5 +12,6 @@ def map_to_db_user(user: dto.User) -> User:
         id=user.id,
         username=user.username,
         firstname=user.firstname,
-        lastname=user.lastname
+        lastname=user.lastname,
+        payments_count=user.payments_count
     )

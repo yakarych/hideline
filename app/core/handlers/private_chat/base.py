@@ -36,6 +36,7 @@ async def cmd_instruction(m: types.Message, state: FSMContext):
     await session.add_user(user)
 
     await m.answer(msgs.instruction, reply_markup=reply.default_menu)
+    print(connector.get_connection().get_keys())
 
 
 def register_handlers(dp: Dispatcher) -> None:
