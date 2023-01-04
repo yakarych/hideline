@@ -47,7 +47,7 @@ async def create_keys(m: types.Message, state: FSMContext):
     await m.answer(msgs.keys_description)
     await m.answer_chat_action(ChatActions.TYPING)
     await asyncio.sleep(1)
-    await m.answer(msgs.keys_description_2, reply_markup=inline.keys)
+    await m.answer(msgs.keys_description_2, reply_markup=inline.keys(user_id=user.id))
 
 
 def register_handlers(dp: Dispatcher) -> None:
