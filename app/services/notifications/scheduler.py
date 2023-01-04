@@ -12,5 +12,5 @@ def setup_cron_jobs(scheduler: AsyncIOScheduler, bot: Bot, config: Config) -> No
             bot=bot,
             yoomoney_token=config.yoomoney_api.token
         ).check,
-        trigger=IntervalTrigger(seconds=5),
+        trigger=IntervalTrigger(seconds=15),
     )

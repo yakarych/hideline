@@ -1,3 +1,4 @@
+import asyncio
 from typing import Optional
 
 from aiogram import Bot
@@ -5,6 +6,7 @@ from glQiwiApi import YooMoneyAPI
 from glQiwiApi.yoo_money.types import OperationHistory, Operation
 
 from app.models.database import User
+from app.services.api.connector import get_connection
 from app.services.database.dao.user import UserDAO
 from app.services.payments.types import Cost, get_payment_type
 from app.settings.config import load_config
@@ -28,6 +30,22 @@ class PaymentsChecker:
                 new_payment = self._get_new_payment_if_exists(payments_history=payments_history, user=user)
                 if new_payment:
                     await dao.increment_payments_count(user_id=user.id)
+                    payment_amount = get_payment_type(new_payment.amount)
+                    connection = get_connection()
+                    if payment_amount == Cost.ONE_KEY_COST:
+                        count = 1
+                    elif payment_amount == Cost.TWO_KEY_COST:
+                        count = 2
+                    elif payment_amount == Cost.THREE_KEY_COST:
+                        count = 3
+
+                    for _ in range(count):
+                        new_key = connection.create_key(key_name=str(user.id))
+                        connection.add_data_limit(new_key.key_id, 1024 * 1024 * 1024 * 30)  # 30GB
+                        await self.bot.send_message(user.id, f"Вы купили ключ, поздравляю! "
+                                                             f"Скопируйте и вставьте его в Outline:\n "
+                                                             f"<code>{new_key.access_url}</code>")
+                        await asyncio.sleep(0.1)
 
     def _get_new_payment_if_exists(self, payments_history: OperationHistory, user: User) -> Optional[Operation]:
         personal_operations = []

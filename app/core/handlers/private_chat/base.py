@@ -11,6 +11,7 @@ from app.core.middlewares.throttling import throttle
 from app.core.navigations.command import Commands
 from app.models.dto import get_user_from_message
 from app.core.navigations import reply as reply_texts
+from app.services.api.connector import get_connection
 from app.services.database.dao.user import UserDAO
 
 
@@ -50,6 +51,20 @@ async def create_keys(m: types.Message, state: FSMContext):
     await m.answer(msgs.keys_description_2, reply_markup=inline.keys(user_id=user.id))
 
 
+@throttle(limit=4)
+async def my_keys(m: types.Message, state: FSMContext):
+    user = get_user_from_message(message=m)
+    session = UserDAO(session=m.bot.get("db"))
+    await session.add_user(user)
+
+    api_connection = get_connection()
+    user_keys = [key for key in api_connection.get_keys() if key.name == str(user.id)]
+    for i, key in enumerate(user_keys):
+        await m.answer(f"<b>{i+1}</b>. Ключ: <code>{key.access_url}</code>\n")
+    if not user_keys:
+        await m.answer("У тебя нет ключей. Купи и будут!)")
+
+
 def register_handlers(dp: Dispatcher) -> None:
     """Register base handlers: /start and handling events from default menu"""
 
@@ -60,3 +75,6 @@ def register_handlers(dp: Dispatcher) -> None:
     dp.register_message_handler(create_keys, commands=str(Commands.create_key),
                                 chat_type=ChatType.PRIVATE, state="*")
     dp.register_message_handler(create_keys, Text(reply_texts.create_access_key))
+    dp.register_message_handler(my_keys, commands=str(Commands.access_keys),
+                                chat_type=ChatType.PRIVATE, state="*")
+    dp.register_message_handler(my_keys, Text(reply_texts.access_keys))
