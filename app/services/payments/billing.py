@@ -26,18 +26,14 @@ class PaymentsChecker:
         dao = UserDAO(session=self.bot.get("db"))
         async with YooMoneyAPI(api_access_token=self.yoomoney_token) as client:
             for user in await dao.get_all():
+                print("Текущий каунт: ", user.payments_count)
                 payments_history = await client.operation_history(records=100, label=str(user.id))
                 new_payment = self._get_new_payment_if_exists(payments_history=payments_history, user=user)
                 if new_payment:
                     await dao.increment_payments_count(user_id=user.id)
                     payment_amount = get_payment_type(new_payment.amount)
                     connection = get_connection()
-                    if payment_amount == Cost.ONE_KEY_COST:
-                        count = 1
-                    elif payment_amount == Cost.TWO_KEY_COST:
-                        count = 2
-                    elif payment_amount == Cost.THREE_KEY_COST:
-                        count = 3
+                    count = self._get_bought_keys_count(payment_amount)
 
                     for _ in range(count):
                         new_key = connection.create_key(key_name=str(user.id))
@@ -47,11 +43,21 @@ class PaymentsChecker:
                                                              f"<code>{new_key.access_url}</code>")
                         await asyncio.sleep(0.1)
 
+    def _get_bought_keys_count(self, payment_amount: Cost) -> int:
+        if payment_amount == Cost.ONE_KEY_COST:
+            return 1
+        elif payment_amount == Cost.TWO_KEY_COST:
+            return 2
+        elif payment_amount == Cost.THREE_KEY_COST:
+            return 3
+        return 0
+
     def _get_new_payment_if_exists(self, payments_history: OperationHistory, user: User) -> Optional[Operation]:
         personal_operations = []
         for operation in payments_history.operations:
             if operation.status == "success" and operation.label == str(user.id) and operation.direction == 'in':
                 personal_operations.append(operation)
+                print('Операция ', operation)
 
         if personal_operations:
             # Skipped user without new (actual) payments

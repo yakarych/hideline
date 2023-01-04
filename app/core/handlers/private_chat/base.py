@@ -33,18 +33,12 @@ async def cmd_start(m: types.Message, state: FSMContext):
 
 @throttle(limit=3)
 async def cmd_instruction(m: types.Message, state: FSMContext):
-    user = get_user_from_message(message=m)
-    session = UserDAO(session=m.bot.get("db"))
-    await session.add_user(user)
-
     await m.answer(msgs.instruction, reply_markup=reply.default_menu)
 
 
 @throttle(limit=2)
 async def create_keys(m: types.Message, state: FSMContext):
     user = get_user_from_message(message=m)
-    session = UserDAO(session=m.bot.get("db"))
-    await session.add_user(user)
     await m.answer(msgs.keys_description)
     await m.answer_chat_action(ChatActions.TYPING)
     await asyncio.sleep(1)
@@ -54,9 +48,6 @@ async def create_keys(m: types.Message, state: FSMContext):
 @throttle(limit=4)
 async def my_keys(m: types.Message, state: FSMContext):
     user = get_user_from_message(message=m)
-    session = UserDAO(session=m.bot.get("db"))
-    await session.add_user(user)
-
     api_connection = get_connection()
     user_keys = [key for key in api_connection.get_keys() if key.name == str(user.id)]
     for i, key in enumerate(user_keys):
@@ -67,9 +58,6 @@ async def my_keys(m: types.Message, state: FSMContext):
 
 @throttle(limit=5)
 async def feedback(m: types.Message, state: FSMContext):
-    user = get_user_from_message(message=m)
-    session = UserDAO(session=m.bot.get("db"))
-    await session.add_user(user)
     await m.answer("@Karych. Писать только по делу, иначе бан!")
 
 

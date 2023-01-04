@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from app.models import dto
 from app.models.database import User
+from app.services.api.connector import get_connection
 from app.services.database.dao import mapper
 from app.services.database.dao.base import BaseDAO
 
