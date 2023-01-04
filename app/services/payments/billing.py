@@ -26,12 +26,12 @@ class PaymentsChecker:
         async with YooMoneyAPI(api_access_token=self.yoomoney_token) as client:
             payments_history = await client.operation_history(records=30)
             for user in await dao.get_all():
-                new_payment = self._get_new_payment(user_id=user.id, payments_history=payments_history, user=user, dao=dao)
+                new_payment = self._get_new_payment(user_id=user.id, payments_history=payments_history, user=user)
                 if new_payment:
                     await dao.increment_payments_count(user_id=user.id)
                     # TODO: Create and send keys.
 
-    def _get_new_payment(self, user_id: int, payments_history: OperationHistory, user: User, dao: UserDAO) -> Optional[Operation]:
+    def _get_new_payment(self, user_id: int, payments_history: OperationHistory, user: User) -> Optional[Operation]:
         payments_history.operations = self._get_personal_operations(
             operations=payments_history.operations,
             user_id=user_id
