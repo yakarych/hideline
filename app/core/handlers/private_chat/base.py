@@ -65,6 +65,14 @@ async def my_keys(m: types.Message, state: FSMContext):
         await m.answer("У тебя нет ключей. Купи и будут!)")
 
 
+@throttle(limit=5)
+async def feedback(m: types.Message, state: FSMContext):
+    user = get_user_from_message(message=m)
+    session = UserDAO(session=m.bot.get("db"))
+    await session.add_user(user)
+    await m.answer("@Karych. Писать только по делу, иначе бан!")
+
+
 def register_handlers(dp: Dispatcher) -> None:
     """Register base handlers: /start and handling events from default menu"""
 
@@ -78,3 +86,6 @@ def register_handlers(dp: Dispatcher) -> None:
     dp.register_message_handler(my_keys, commands=str(Commands.access_keys),
                                 chat_type=ChatType.PRIVATE, state="*")
     dp.register_message_handler(my_keys, Text(reply_texts.access_keys))
+    dp.register_message_handler(feedback, commands=str(Commands.support),
+                                chat_type=ChatType.PRIVATE, state="*")
+    dp.register_message_handler(feedback, Text(reply_texts.support))
