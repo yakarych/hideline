@@ -32,11 +32,18 @@ class OutlineAPI:
 
 
 @dataclass
+class YoomoneyAPI:
+    token: str
+    card_id: str
+
+
+@dataclass
 class Config:
     """Configurator"""
     bot: Bot
     db: DB
     outline_api: OutlineAPI
+    yoomoney_api: YoomoneyAPI
 
 
 def get_parse_mode(bot_section: configparser.SectionProxy) -> str:
@@ -70,6 +77,7 @@ def load_config() -> Config:
     bot = config["bot"]
     db = config["db"]
     outline_api = config["outline_api"]
+    yoomoney_api = config["yoomoney"]
 
     # Get & return config data instance
     return Config(
@@ -86,5 +94,9 @@ def load_config() -> Config:
         ),
         outline_api=OutlineAPI(
             api_url=outline_api["api_url"]
+        ),
+        yoomoney_api=YoomoneyAPI(
+            token=yoomoney_api["token"],
+            card_id=yoomoney_api["card_id"]
         )
     )

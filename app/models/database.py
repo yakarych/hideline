@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BigInteger, String, DateTime, func
+from sqlalchemy import Column, BigInteger, Integer, String, DateTime, func
 
 from app.services.database.base import Base
 
@@ -13,7 +13,8 @@ class User(Base):
     firstname = Column(String, default=None)
     lastname = Column(String, default=None)
     registered_date = Column(DateTime(timezone=True), server_default=func.now())
+    payments_count = Column(Integer, default=0)
 
     def __repr__(self) -> str:
         return f"User: {self.id}, {self.username}, {self.firstname} " \
-               f"{self.lastname}, {self.registered_date}"
+               f"{self.lastname}, {self.registered_date}, {self.payments_count}"

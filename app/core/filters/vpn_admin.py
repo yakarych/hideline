@@ -13,11 +13,11 @@ class VPNAdminFilter(BoundFilter):
 
     key = "vpn_admin"
 
-    def __init__(self, project_admin: bool):
-        self.project_admin = project_admin
+    def __init__(self, vpn_admin: bool):
+        self.vpn_admin = vpn_admin
 
     async def check(self, obj: Union[types.Message, types.CallbackQuery]):
         user = obj.from_user
         if user.id in ADMIN_IDS:
-            return self.project_admin is True
-        return self.project_admin is False
+            return self.vpn_admin is True
+        return self.vpn_admin is False

@@ -11,3 +11,7 @@ password =
 
 [outline_api]
 api_url =
+
+[yoomoney]
+token =
+card_id =

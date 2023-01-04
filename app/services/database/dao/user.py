@@ -1,3 +1,4 @@
+from sqlalchemy import update
 from sqlalchemy.orm import sessionmaker
 
 from app.models import dto
@@ -20,4 +21,10 @@ class UserDAO(BaseDAO[User]):
 
         async with self._session() as session:
             await session.merge(mapper.map_to_db_user(user))
+            await session.commit()
+
+    async def increment_payments_count(self, user_id: int) -> None:
+        async with self._session() as session:
+            await session.execute(update(User).where(User.id == user_id).
+                                  values(payments_count=User.payments_count + 1))
             await session.commit()
