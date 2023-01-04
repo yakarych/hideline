@@ -13,6 +13,7 @@ alembic = "^1.8.0"
 tzlocal = "^4.2"
 pydantic = "^1.9.1"
 greenlet = "*"
+requests = "*"
 
 
 [tool.poetry.dev-dependencies]
