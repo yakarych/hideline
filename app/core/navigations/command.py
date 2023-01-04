@@ -44,6 +44,7 @@ class Commands(BaseCommandList):
     access_keys = Command(name='keys', description="Мои ключи")
     subscription = Command(name='sub', description="Моя подписка")
     support = Command(name='support', description="Связаться с тех.поддержкой")
+    instruction = Command(name='instruction', description="Получить инструкцию")
 
 
 async def set_bot_commands(bot: Bot) -> None:
