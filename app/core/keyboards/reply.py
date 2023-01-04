@@ -17,10 +17,11 @@ class ResizedReplyKeyboard(ReplyKeyboardMarkup):
 default_menu = ResizedReplyKeyboard(
     keyboard=[
         [
+            KeyboardButton(reply.create_access_key),
             KeyboardButton(reply.access_keys),
-            KeyboardButton(reply.subscription)
         ],
         [
+            KeyboardButton(reply.subscription),
             KeyboardButton(reply.support),
         ]
     ]

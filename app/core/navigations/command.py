@@ -39,10 +39,11 @@ class Commands(BaseCommandList):
     For this case, create another commands list & factory.
     """
 
-    start = Command(name='start', description='Start Bot')
-    access_keys = Command(name='keys', description="Manage my keys")
-    subscription = Command(name='sub', description="Manage my subscription")
-    support = Command(name='support', description="Connect with support")
+    start = Command(name='start', description="Включить бота")
+    create_key = Command(name='create_key', description="Создать ключ доступа")
+    access_keys = Command(name='keys', description="Мои ключи")
+    subscription = Command(name='sub', description="Моя подписка")
+    support = Command(name='support', description="Связаться с тех.поддержкой")
 
 
 async def set_bot_commands(bot: Bot) -> None:
