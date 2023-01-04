@@ -21,7 +21,6 @@ default_menu = ResizedReplyKeyboard(
             KeyboardButton(reply.access_keys),
         ],
         [
-            KeyboardButton(reply.subscription),
             KeyboardButton(reply.support),
         ]
     ]

@@ -42,7 +42,6 @@ class Commands(BaseCommandList):
     start = Command(name='start', description="Включить бота")
     create_key = Command(name='create_key', description="Создать ключ доступа")
     access_keys = Command(name='keys', description="Мои ключи")
-    subscription = Command(name='sub', description="Моя подписка")
     support = Command(name='support', description="Связаться с тех.поддержкой")
     instruction = Command(name='instruction', description="Получить инструкцию")
 
