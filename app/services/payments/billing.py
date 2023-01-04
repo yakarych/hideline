@@ -55,7 +55,7 @@ def get_payment_url(user_id: int, cost: Cost) -> str:
     return YooMoneyAPI.create_pay_form(
         receiver=load_config().yoomoney_api.card_id,
         quick_pay_form="shop",
-        targets="Sponsor this project",
+        targets="Hideline",
         payment_type="SB",
         amount=cost.value,
         label=f"{user_id}{cost.value}"

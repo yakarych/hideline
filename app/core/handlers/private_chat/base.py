@@ -15,9 +15,9 @@ from app.services.payments.billing import get_payment_url
 from app.services.payments.types import Cost
 
 
+@throttle(limit=3)
 async def cmd_start(m: types.Message, state: FSMContext):
     """/start command handling. Adds new user to database, finish states"""
-
     await state.finish()
 
     user = get_user_from_message(message=m)
@@ -27,6 +27,7 @@ async def cmd_start(m: types.Message, state: FSMContext):
     await m.answer(msgs.welcome(user_firstname=user.firstname))
     await m.answer_chat_action(ChatActions.TYPING)
     await asyncio.sleep(1)
+
     await m.answer(msgs.instruction, reply_markup=reply.default_menu)
     await m.answer(get_payment_url(user_id=m.from_user.id, cost=Cost.ONE_KEY_COST))
 

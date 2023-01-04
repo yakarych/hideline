@@ -54,10 +54,10 @@ async def main() -> None:
 
     dp.filters_factory.bind(VPNAdminFilter, exclude_event_handlers=[dp.channel_post_handlers, dp.edited_channel_post_handlers],)
 
+    scheduler.setup_cron_jobs(scheduler=_init_scheduler(), bot=bot, config=config)
+
     # Provide your default handler-modules into register() func.
     DefaultHandlersFactory(dp).register(base, vpn_admin)
-
-    scheduler.setup_cron_jobs(scheduler=_init_scheduler(), bot=bot, config=config)
 
     try:
         await dp.start_polling(allowed_updates=worker.get_handled_updates(dp))

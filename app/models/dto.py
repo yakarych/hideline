@@ -16,7 +16,7 @@ class User:
     username: str | None = None
     firstname: str | None = None
     lastname: str | None = None
-    payments_count: int | None = None
+    payments_count: int = 0
 
     @classmethod
     def from_aiogram(cls, user: tg.User) -> User:
