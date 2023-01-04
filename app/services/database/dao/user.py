@@ -25,6 +25,6 @@ class UserDAO(BaseDAO[User]):
 
     async def increment_payments_count(self, user_id: int) -> None:
         async with self._session() as session:
-            await session.execute(update(User).where(User.user_id == user_id).
+            await session.execute(update(User).where(User.id == user_id).
                                   values(payments_count=User.payments_count + 1))
             await session.commit()

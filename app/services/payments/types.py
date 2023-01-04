@@ -11,7 +11,7 @@ class Cost(int, Enum):
 MAX_RUB_COMMISSION_VALUE = 30
 
 
-def get_payment_type(amount: int) -> Optional[Cost]:
+def get_payment_type(amount: float) -> Optional[Cost]:
     if Cost.ONE_KEY_COST.value - MAX_RUB_COMMISSION_VALUE <= amount <= Cost.ONE_KEY_COST.value + MAX_RUB_COMMISSION_VALUE:
         return Cost.ONE_KEY_COST
     if Cost.TWO_KEY_COST.value - MAX_RUB_COMMISSION_VALUE <= amount <= Cost.TWO_KEY_COST.value + MAX_RUB_COMMISSION_VALUE:

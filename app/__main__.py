@@ -38,8 +38,7 @@ async def main() -> None:
     # In prod, add `filename=` arg and write your logs to file instead of stdout
     logging.basicConfig(
         level=logging.WARNING,
-        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-        filename=f"{ROOT_DIR}/error.log"
+        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s"
     )
 
     config: Config = load_config()
