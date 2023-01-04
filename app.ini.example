@@ -8,3 +8,6 @@ port = 5432
 name =
 user =
 password =
+
+[outline_api]
+api_url =

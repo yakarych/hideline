@@ -27,10 +27,16 @@ class DB:
 
 
 @dataclass
+class OutlineAPI:
+    api_url: str
+
+
+@dataclass
 class Config:
     """Configurator"""
     bot: Bot
     db: DB
+    outline_api: OutlineAPI
 
 
 def get_parse_mode(bot_section: configparser.SectionProxy) -> str:
@@ -63,6 +69,7 @@ def load_config() -> Config:
     # Get .ini config "blocks"
     bot = config["bot"]
     db = config["db"]
+    outline_api = config["outline_api"]
 
     # Get & return config data instance
     return Config(
@@ -76,5 +83,8 @@ def load_config() -> Config:
             name=db["name"],
             user=db["user"],
             password=db["password"]
+        ),
+        outline_api=OutlineAPI(
+            api_url=outline_api["api_url"]
         )
     )
