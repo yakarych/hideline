@@ -1,27 +1,16 @@
-# Aioplate. <a href="https://github.com/devkarych/aioplate/blob/main/DOCS.md">Read the docs</a>
+# Hideline
 
-### Below is a universal template for your project description.
-
-# App Name
+### 
 
 ## App description
-
-...
+<b>Hideline</b> is a service in Telegram for getting outline-vpn access keys.
 
 ## Stack
-
-...
+- Python (3.11)
+- Aiogram (2.x)
 
 ## Installation guide
-
-...
+Check it in my Aioplate repo.
 
 ## Links
-
-...
-
-## Screenshots & video-previews
-
-...
-
-## Credits
+<b>Bot</b> - https://t.me/hidelinebot.
